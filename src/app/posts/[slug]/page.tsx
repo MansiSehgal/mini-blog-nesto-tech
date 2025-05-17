@@ -1,4 +1,5 @@
-import { getBlogById } from '@/app/lib/db';
+// app/blog/[slug]/page.tsx
+import { getBlogById, getBlogs } from '@/app/lib/db';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react';
@@ -9,21 +10,32 @@ interface PageProps {
   };
 }
 
+// ✅ Fix 1: Add generateStaticParams for SSG
+export async function generateStaticParams() {
+  const blogs = await getBlogs();
+
+  return blogs.map((blog) => ({
+    slug: blog.id.toString(),
+  }));
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const blog = await getBlogById(params?.slug);
+  const blog = await getBlogById(params.slug);
 
   if (!blog) {
     return {
       title: 'Blog Not Found',
     };
   }
+
   return {
     title: blog.title,
-    description: blog.content.substring(0, 160),
+    description: blog.content?.substring(0, 160),
   };
 }
+
 export default async function BlogDetail({ params }: PageProps) {
-  const blog = await getBlogById(params?.slug);
+  const blog = await getBlogById(params.slug);
 
   if (!blog) {
     notFound();
