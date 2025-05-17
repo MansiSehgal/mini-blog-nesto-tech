@@ -5,12 +5,11 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-// ✅ Fix 1: Add generateStaticParams for SSG
 export async function generateStaticParams() {
   const blogs = await getBlogs();
 
@@ -20,7 +19,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const blog = await getBlogById(params.slug);
+  const blog = await getBlogById((await params).slug);
 
   if (!blog) {
     return {
@@ -35,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BlogDetail({ params }: PageProps) {
-  const blog = await getBlogById(params.slug);
+  const blog = await getBlogById((await params).slug);
 
   if (!blog) {
     notFound();
