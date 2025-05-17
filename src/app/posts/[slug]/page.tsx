@@ -41,7 +41,7 @@ export default async function BlogDetail({ params }: PageProps) {
               <span>{blog.date}</span>
             </div>
             <div className="prose max-w-none text-gray-700">
-              <p className="whiteespace-pre-line">{blog.content}</p>
+              <p className="whitespace-pre-line">{blog.content}</p>
             </div>
           </div>
         </div>
