@@ -12,6 +12,7 @@
     "commit": "cz"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.7",
     "lucide-react": "^0.511.0",
     "next": "15.3.2",
     "postcss": "8",
@@ -22,7 +23,6 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/eslintrc": "^3.3.1",
-    "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.15.18",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
@@ -48,5 +48,8 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "overrides": {
+    "glob": "^10.0.0"
   }
 }
